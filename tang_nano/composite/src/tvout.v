@@ -1,7 +1,8 @@
 module top (
   input sys_rst_n,
   input sys_clk,
-  output reg [2:0] sig
+  output reg [2:0] sig,
+  input button0
 );
 
   localparam [2:0] sync = 3'b000;
@@ -26,7 +27,8 @@ module top (
     pix_clk,
     row_enable,             // 1, during row output, 0 otherwise
     vert_c,
-    pixel_signal
+    pixel_signal,
+    button0
   );
 
   // http://www.batsocks.co.uk/readme/video_timing.htm
@@ -38,16 +40,15 @@ module top (
 
     if ( clk_c == 5 )
     begin 
-      clk <= ~clk;
+      clk <= ~clk;        // 2MHz
       clk_c <= 3'd0;
     end
 
     if ( pix_c == 1 )
     begin 
-      pix_clk <= ~pix_clk;
+      pix_clk <= ~pix_clk; // 6MHz
       pix_c <= 3'd0;
     end
-
   end
 
   always @(posedge clk) begin
@@ -59,46 +60,27 @@ module top (
 
     oscilloscope <= !oscilloscope;
 
-    if ( vert_c < 9'd2 )      
-      if ( horiz_c[5:0] < (64-9) ) 
-        sync_signal <= sync;
-      else
-        sync_signal <= black;
+    if ( vert_c < 9'd2 )
+      sync_signal <= horiz_c[5:0] < (64-9) ? sync : black;
     else if ( vert_c == 9'd2)
       begin
-        if ( !horiz_c[6] )   
-          if ( horiz_c[5:0] < (64-9) ) 
-            sync_signal <= sync;
-          else
-            sync_signal <= black;
+        if ( !horiz_c[6] )             
+          sync_signal <= horiz_c[5:0] < (64-9) ? sync : black;
         else
-          if ( horiz_c[5:0] < 6'd5 ) 
-            sync_signal <= sync;
-          else
-            sync_signal <= black;
+          sync_signal <= horiz_c[5:0] < 6'd5 ? sync : black;
       end
     else if ( vert_c < 9'd5 )
       begin
-        if ( horiz_c[5:0] < 6'd5 ) 
-          sync_signal <= sync;
-        else
-          sync_signal <= black;
+        sync_signal <= horiz_c[5:0] < 6'd5 ? sync : black;
       end
     else if ( vert_c < 9'd309 )
     begin
       if ( horiz_c < 7'd9 )
-      begin
         sync_signal <= sync;
-      end
       else if ( horiz_c < 7'd21 )
-      begin
         sync_signal <= black;
-      end
       else if ( horiz_c < 7'd125 )
-      begin
-        // This is me generating the clock interference right here....
           row_enable <= 1;
-      end
       else
       begin 
         row_enable <= 0;
@@ -107,10 +89,7 @@ module top (
     end
     else 
     begin      
-      if ( horiz_c[5:0] < 6'd5 ) 
-        sync_signal <= sync;
-      else
-        sync_signal <= black;   
+      sync_signal <= horiz_c[5:0] < 6'd5 ? sync : black;
     end  
   end
 

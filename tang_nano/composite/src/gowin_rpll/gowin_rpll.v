@@ -4,9 +4,9 @@
 //GOWIN Version: V1.9.8.01
 //Part Number: GW1N-LV1QN48C6/I5
 //Device: GW1N-1
-//Created Time: Mon Dec 20 09:40:06 2021
+//Created Time: Sun Dec 26 13:56:01 2021
 
-module gw_pll (clkout, clkin);
+module Gowin_rPLL (clkout, clkin);
 
 output clkout;
 input clkin;
@@ -37,11 +37,11 @@ rPLL rpll_inst (
     .FDLY({gw_gnd,gw_gnd,gw_gnd,gw_gnd})
 );
 
-defparam rpll_inst.FCLKIN = "400";
+defparam rpll_inst.FCLKIN = "100";
 defparam rpll_inst.DYN_IDIV_SEL = "false";
-defparam rpll_inst.IDIV_SEL = 36;
+defparam rpll_inst.IDIV_SEL = 20;
 defparam rpll_inst.DYN_FBDIV_SEL = "false";
-defparam rpll_inst.FBDIV_SEL = 10;
+defparam rpll_inst.FBDIV_SEL = 24;
 defparam rpll_inst.DYN_ODIV_SEL = "false";
 defparam rpll_inst.ODIV_SEL = 4;
 defparam rpll_inst.PSDA_SEL = "0000";
@@ -60,4 +60,4 @@ defparam rpll_inst.CLKOUTD_SRC = "CLKOUT";
 defparam rpll_inst.CLKOUTD3_SRC = "CLKOUT";
 defparam rpll_inst.DEVICE = "GW1N-1";
 
-endmodule //gw_pll
+endmodule //Gowin_rPLL

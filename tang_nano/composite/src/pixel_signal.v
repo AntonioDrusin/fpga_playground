@@ -2,7 +2,8 @@ module video_signal (
   input sys_clk,
   input row_enable,             // 1, during row output, 0 otherwise
   input [8:0] vert_c,
-  output reg [2:0] pixel_signal
+  output [2:0] pixel_signal,
+  input button0
 );
 
   localparam [2:0] sync = 3'b000;
@@ -14,34 +15,47 @@ module video_signal (
   localparam [2:0] gray4 = 3'b110;
   localparam [2:0] gray5 = 3'b111;
 
-  reg [15:0] counter;
+  wire pixel_clk;
+  reg [2:0] pixelsc;
+  reg [2:0] pixelsp;
+
+  Gowin_rPLL pixel_clock_generator(
+      .clkout(pixel_clk), //output clkout
+      //.reset(!row_enable), //input reset
+      .clkin(sys_clk) //input clkin
+  );
+
+  reg [15:0] counterc;
+  reg [15:0] counterp;
+
+  always @(posedge pixel_clk) 
+  begin
+    if ( row_enable)
+    begin
+      counterp <= counterp + 1'd1;
+      if ( vert_c[4] )
+        pixelsp = counterp[4] ? gray2 : black;
+      else    
+        pixelsp = counterp[4] ? black : gray2;
+    end
+    else
+      counterp <= 16'd0;
+  end
 
   always @(posedge sys_clk) 
   begin
-    if ( row_enable )
+    if ( row_enable)
     begin
-      counter <= counter + 1'd1;
-
+      counterc <= counterc + 1'd1;
       if ( vert_c[4] )
-      begin
-        if ( counter[4] ) 
-          pixel_signal = gray2;
-        else  
-          pixel_signal = black;
-      end
+        pixelsc = counterc[4] ? gray2 : black;
       else    
-      begin 
-        if ( counter[4] ) 
-          pixel_signal = black;
-        else  
-          pixel_signal = gray2;
-      end
-
+        pixelsc = counterc[4] ? black : gray2;
     end
     else
-    begin
-      counter <= 16'd0;
-    end
+      counterc <= 16'd0;
   end
+
+  assign pixel_signal = button0 ? pixelsp : pixelsc;
 
 endmodule

@@ -1,7 +1,7 @@
 [General]
 ipc_version=4
 file=gowin_rpll
-module=gw_pll
+module=Gowin_rPLL
 target_device=gw1n1-004
 type=clock_rpll
 version=1.0
@@ -9,7 +9,7 @@ version=1.0
 [Config]
 CKLOUTD3=false
 CLKFB_SOURCE=0
-CLKIN_FREQ=400
+CLKIN_FREQ=100
 CLKOUTD=false
 CLKOUTP=false
 CLKOUT_BYPASS=false
