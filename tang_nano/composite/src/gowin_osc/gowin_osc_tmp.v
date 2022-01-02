@@ -4,12 +4,12 @@
 //GOWIN Version: V1.9.8.01
 //Part Number: GW1N-LV1QN48C6/I5
 //Device: GW1N-1
-//Created Time: Mon Dec 20 13:08:47 2021
+//Created Time: Wed Dec 29 09:42:28 2021
 
 //Change the instance name and port connections to the signal names
 //--------Copy here to design--------
 
-    gw_osc your_instance_name(
+    Gowin_OSC your_instance_name(
         .oscout(oscout_o) //output oscout
     );
 

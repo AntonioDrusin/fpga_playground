@@ -1,61 +1,55 @@
 module video_signal (
-  input sys_clk,
+  input pixel_clk,
   input row_enable,             // 1, during row output, 0 otherwise
-  input [8:0] vert_c,
-  output [2:0] pixel_signal,
-  input button0
+  input vblank,
+
+  output reg cache_readen,
+  input reg cache_out,
+  output reg [8:0] cache_addrout,
+
+  output reg [15:0] mem_addrout,
+  input mem_ready,
+  output reg mem_readstrobe,
+
+  output reg [2:0] pixel_signal
 );
-
-  localparam [2:0] sync = 3'b000;
-  localparam [2:0] black = 3'b001;
-  localparam [2:0] gray0 = 3'b010;
-  localparam [2:0] gray1 = 3'b100;
-  localparam [2:0] gray2 = 3'b011;
-  localparam [2:0] gray3 = 3'b101;
-  localparam [2:0] gray4 = 3'b110;
-  localparam [2:0] gray5 = 3'b111;
-
-  wire pixel_clk;
-  reg [2:0] pixelsc;
-  reg [2:0] pixelsp;
-
-  Gowin_rPLL pixel_clock_generator(
-      .clkout(pixel_clk), //output clkout
-      //.reset(!row_enable), //input reset
-      .clkin(sys_clk) //input clkin
-  );
-
-  reg [15:0] counterc;
-  reg [15:0] counterp;
+  reg fetchdone = 0;
+  reg [3:0] delaycounter = 0;
 
   always @(posedge pixel_clk) 
   begin
-    if ( row_enable)
+    if (row_enable)
     begin
-      counterp <= counterp + 1'd1;
-      if ( vert_c[4] )
-        pixelsp = counterp[4] ? gray2 : black;
-      else    
-        pixelsp = counterp[4] ? black : gray2;
+      // fetch at the beginning of the row
+      if ( !fetchdone ) begin 
+        if ( mem_ready ) begin
+          mem_addrout <= mem_addrout + 7'd80; // skip 80 bytes and read the next row
+          mem_readstrobe <= 1;
+          fetchdone <= 1;
+        end
+      end
+      else mem_readstrobe <= 0;
+
+      // Write pixel out after a 16 pixel initial delay
+      if ( &delaycounter ) begin
+        cache_readen <= 1;
+        if ( cache_readen ) cache_addrout <= cache_addrout + 1'd1;
+        // Visible between d24 and d280
+        pixel_signal <= cache_out  ? video_level.gray3 : video_level.black; //cache_out ? gray3 : black;
+      end
+      else
+        delaycounter <= delaycounter + 1'd1;
+    end
+    else if ( vblank ) begin
+      mem_addrout <= 0;
     end
     else
-      counterp <= 16'd0;
-  end
-
-  always @(posedge sys_clk) 
-  begin
-    if ( row_enable)
     begin
-      counterc <= counterc + 1'd1;
-      if ( vert_c[4] )
-        pixelsc = counterc[4] ? gray2 : black;
-      else    
-        pixelsc = counterc[4] ? black : gray2;
+      cache_readen <= 0;
+      fetchdone <= 0;
+      delaycounter <= 0;
+      cache_addrout <= 9'd0;
     end
-    else
-      counterc <= 16'd0;
   end
-
-  assign pixel_signal = button0 ? pixelsp : pixelsc;
 
 endmodule

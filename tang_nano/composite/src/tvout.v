@@ -2,46 +2,41 @@ module top (
   input sys_rst_n,
   input sys_clk,
   output reg [2:0] sig,
-  input button0
+  input button0,
+
+ // These are connected to the mem chip. Pinout is for Sipeed TANG Nano
+  inout wire [3:0] mem_sio,   // sio[0] pin 22, sio[1] pin 23, sio[2] pin 24, sio[3] pin 21
+  output wire mem_ce_n,       // pin 19
+  output wire mem_clk         // pin 
 );
 
-  localparam [2:0] sync = 3'b000;
-  localparam [2:0] black = 3'b001;
-  localparam [2:0] gray = 3'b101;
-  localparam [2:0] gray2 = 3'b011;
-
-  reg clk;
-  reg row_enable;
   wire [2:0] pixel_signal;
-  reg [2:0] sync_signal;
-  reg pix_clk;
+  wire [2:0] sync_signal;
+
+  reg pix_clk = 0;
+  reg syn_clk = 0;
+  wire work_clk;
+  reg [2:0] syn_c = 0;   // clock divider counter
+  reg [2:0] pix_c = 0;
+   
+  wire mem_ready;
+
+
+    Gowin_rPLL pll (
+        .clkout(work_clk), //output clkout
+        .clkin(sys_clk) //input clkin
+    );
+
   
- 
-  reg [6:0] horiz_c; // 0-127 for each line 0-63 for halflines, 0.5uS resolution
-  reg [8:0] vert_c;  // vertical counter 
-  reg [2:0] clk_c;   // clock divider counter
-  reg [2:0] pix_c;
-  reg oscilloscope;
-
-  video_signal video_signal(
-    pix_clk,
-    row_enable,             // 1, during row output, 0 otherwise
-    vert_c,
-    pixel_signal,
-    button0
-  );
-
-  // http://www.batsocks.co.uk/readme/video_timing.htm
-
-  // 2MHz generator
+  // Clock generator
   always @(posedge sys_clk) begin
-    clk_c <= clk_c + 3'd1;
+    syn_c <= syn_c + 3'd1;
     pix_c <= pix_c + 3'd1;
 
-    if ( clk_c == 5 )
+    if ( syn_c == 5 )
     begin 
-      clk <= ~clk;        // 2MHz
-      clk_c <= 3'd0;
+      syn_clk <= ~syn_clk;        // 2MHz
+      syn_c <= 3'd0;
     end
 
     if ( pix_c == 1 )
@@ -51,56 +46,84 @@ module top (
     end
   end
 
-  always @(posedge clk) begin
-    horiz_c <= horiz_c+7'd1;
-    if ( horiz_c == 7'h7f )      
-       vert_c <= vert_c + 9'd1;
-    if ( vert_c == 9'd311 ) 
-       vert_c <= 9'd0;
 
-    oscilloscope <= !oscilloscope;
+  wire cache_writeen;
+  wire [3:0] cache_in;
+  wire [6:0] cache_addrin;
 
-    if ( vert_c < 9'd2 )
-      sync_signal <= horiz_c[5:0] < (64-9) ? sync : black;
-    else if ( vert_c == 9'd2)
-      begin
-        if ( !horiz_c[6] )             
-          sync_signal <= horiz_c[5:0] < (64-9) ? sync : black;
-        else
-          sync_signal <= horiz_c[5:0] < 6'd5 ? sync : black;
-      end
-    else if ( vert_c < 9'd5 )
-      begin
-        sync_signal <= horiz_c[5:0] < 6'd5 ? sync : black;
-      end
-    else if ( vert_c < 9'd309 )
-    begin
-      if ( horiz_c < 7'd9 )
-        sync_signal <= sync;
-      else if ( horiz_c < 7'd21 )
-        sync_signal <= black;
-      else if ( horiz_c < 7'd125 )
-          row_enable <= 1;
-      else
-      begin 
-        row_enable <= 0;
-        sync_signal <= black;
-      end
-    end
-    else 
-    begin      
-      sync_signal <= horiz_c[5:0] < 6'd5 ? sync : black;
-    end  
-  end
+  wire cache_readen;
+  wire cache_out;
+  wire [8:0] cache_addrout;
+  
+  gowin_linecache vcache(
+      .dout(cache_out),     //output [0:0] dout (read)
+      .clka(work_clk),      //input clka (write)
+      .cea(cache_writeen),  //input cea (write)
+      .reseta(1'd0),        //input reseta (write)
+      .clkb(pix_clk),     //input clkb (read)
+      .ceb(cache_readen),   //input ceb (read)
+      .resetb(1'd0),        //input resetb (read)
+      .oce(1'd1),           //input oce 
+      .ada(cache_addrin),   //input [6:0] ada (write)
+      .din(cache_in),       //input [3:0] din (write)
+      .adb(cache_addrout)   //input [8:0] adb (read)
+  );
 
-  always @(*)
+  wire [15:0] mem_addrout;
+  reg mem_write_strobe = 0;
+
+  memory memory (
+    work_clk,     // 60MHz
+    mem_ready,
+ 
+    mem_addrout, // address to read from
+
+    mem_read_strobe,
+    mem_write_strobe,
+
+    cache_writeen,
+    cache_in,
+    cache_addrin,
+
+    8'h47,  // init delay * 256
+
+    mem_sio,
+    mem_ce_n,
+    mem_clk
+  );
+
+  wire row_enable;
+  wire vblank;
+
+  // reads from bsram line 1 bit at a time for each row
+  video_signal video_signal(
+    pix_clk,    // 6MHz
+    row_enable, // 1, during row output, 0 otherwise
+    vblank,     // 1, during vblank, 0 when row_enable is going to turn on
+
+    cache_readen,
+    cache_out,
+    cache_addrout,
+
+    mem_addrout,
+    mem_ready,
+    mem_read_strobe,
+
+    pixel_signal
+  );
+
+  video_sync video_sync(
+    syn_clk, // 2MHz
+    row_enable,
+    vblank,
+    sync_signal
+  );
+
+  always @(row_enable or pixel_signal or sync_signal)
     if ( row_enable ) 
       sig <= pixel_signal;
     else
       sig <= sync_signal;
-  begin    
-    
-  end   
-  
+
 endmodule
 
