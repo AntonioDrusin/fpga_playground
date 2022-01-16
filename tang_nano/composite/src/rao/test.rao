@@ -1,0 +1,77 @@
+<?xml version="1" encoding="UTF-8"?>
+<GAO_CONFIG>
+    <Version>3.0</Version>
+    <Mode>Lite</Mode>
+    <AoCore_Lite index="0" sample_clock="sys_clk" trig_type="1" capture_amount="512" implemention="0" input_register_enabled="0" capture_init_data_enabled="0">
+        <SignalList>
+            <Bus name="cbsram_datain[7:0]">
+                <Signal>cbsram_datain[7]</Signal>
+                <Signal>cbsram_datain[6]</Signal>
+                <Signal>cbsram_datain[5]</Signal>
+                <Signal>cbsram_datain[4]</Signal>
+                <Signal>cbsram_datain[3]</Signal>
+                <Signal>cbsram_datain[2]</Signal>
+                <Signal>cbsram_datain[1]</Signal>
+                <Signal>cbsram_datain[0]</Signal>
+            </Bus>
+            <Bus name="cbsram_dataout[7:0]">
+                <Signal>cbsram_dataout[7]</Signal>
+                <Signal>cbsram_dataout[6]</Signal>
+                <Signal>cbsram_dataout[5]</Signal>
+                <Signal>cbsram_dataout[4]</Signal>
+                <Signal>cbsram_dataout[3]</Signal>
+                <Signal>cbsram_dataout[2]</Signal>
+                <Signal>cbsram_dataout[1]</Signal>
+                <Signal>cbsram_dataout[0]</Signal>
+            </Bus>
+            <Bus name="cbsram_addrin[7:0]">
+                <Signal>cbsram_addrin[7]</Signal>
+                <Signal>cbsram_addrin[6]</Signal>
+                <Signal>cbsram_addrin[5]</Signal>
+                <Signal>cbsram_addrin[4]</Signal>
+                <Signal>cbsram_addrin[3]</Signal>
+                <Signal>cbsram_addrin[2]</Signal>
+                <Signal>cbsram_addrin[1]</Signal>
+                <Signal>cbsram_addrin[0]</Signal>
+            </Bus>
+            <Bus name="wbsram_datain[3:0]">
+                <Signal>wbsram_datain[3]</Signal>
+                <Signal>wbsram_datain[2]</Signal>
+                <Signal>wbsram_datain[1]</Signal>
+                <Signal>wbsram_datain[0]</Signal>
+            </Bus>
+            <Bus name="wbsram_dataout[3:0]">
+                <Signal>wbsram_dataout[3]</Signal>
+                <Signal>wbsram_dataout[2]</Signal>
+                <Signal>wbsram_dataout[1]</Signal>
+                <Signal>wbsram_dataout[0]</Signal>
+            </Bus>
+            <Bus name="wbsram_addrin[8:0]">
+                <Signal>wbsram_addrin[8]</Signal>
+                <Signal>wbsram_addrin[7]</Signal>
+                <Signal>wbsram_addrin[6]</Signal>
+                <Signal>wbsram_addrin[5]</Signal>
+                <Signal>wbsram_addrin[4]</Signal>
+                <Signal>wbsram_addrin[3]</Signal>
+                <Signal>wbsram_addrin[2]</Signal>
+                <Signal>wbsram_addrin[1]</Signal>
+                <Signal>wbsram_addrin[0]</Signal>
+            </Bus>
+            <Bus name="counter[7:0]">
+                <Signal>counter[7]</Signal>
+                <Signal>counter[6]</Signal>
+                <Signal>counter[5]</Signal>
+                <Signal>counter[4]</Signal>
+                <Signal>counter[3]</Signal>
+                <Signal>counter[2]</Signal>
+                <Signal>counter[1]</Signal>
+                <Signal>counter[0]</Signal>
+            </Bus>
+            <Signal>cbsram_ce</Signal>
+            <Signal>cbsram_wre</Signal>
+            <Signal>wbsram_ce</Signal>
+            <Signal>wbsram_writeen</Signal>
+        </SignalList>
+    </AoCore_Lite>
+    <GAO_ID>1111100101001001</GAO_ID>
+</GAO_CONFIG>

@@ -1,0 +1,82 @@
+<?xml version="1" encoding="UTF-8"?>
+<GAO_CONFIG>
+    <Version>3.0</Version>
+    <Mode>Standard</Mode>
+    <AoCore index="0" sample_clock="conway/work_clk" trig_type="0" storage_depth="1024" window_num="1" capture_amount="1024" trigger_pos="0">
+        <SignalList>
+            <Bus name="conway/step[3:0]">
+                <Signal>conway/step[3]</Signal>
+                <Signal>conway/step[2]</Signal>
+                <Signal>conway/step[1]</Signal>
+                <Signal>conway/step[0]</Signal>
+            </Bus>
+            <Bus name="conway/curReadRow[7:0]">
+                <Signal>conway/curReadRow[7]</Signal>
+                <Signal>conway/curReadRow[6]</Signal>
+                <Signal>conway/curReadRow[5]</Signal>
+                <Signal>conway/curReadRow[4]</Signal>
+                <Signal>conway/curReadRow[3]</Signal>
+                <Signal>conway/curReadRow[2]</Signal>
+                <Signal>conway/curReadRow[1]</Signal>
+                <Signal>conway/curReadRow[0]</Signal>
+            </Bus>
+            <Bus name="conway/curWriteRow[7:0]">
+                <Signal>conway/curWriteRow[7]</Signal>
+                <Signal>conway/curWriteRow[6]</Signal>
+                <Signal>conway/curWriteRow[5]</Signal>
+                <Signal>conway/curWriteRow[4]</Signal>
+                <Signal>conway/curWriteRow[3]</Signal>
+                <Signal>conway/curWriteRow[2]</Signal>
+                <Signal>conway/curWriteRow[1]</Signal>
+                <Signal>conway/curWriteRow[0]</Signal>
+            </Bus>
+            <Signal>conway/mem_ready</Signal>
+            <Signal>conway/mem_wread_strobe</Signal>
+            <Signal>conway/mem_wwrite_strobe</Signal>
+        </SignalList>
+        <Triggers>
+            <Trigger index="0">
+                <SignalList>
+                    <Signal>conway/linestarted</Signal>
+                </SignalList>
+            </Trigger>
+            <Trigger index="1"/>
+            <Trigger index="2"/>
+            <Trigger index="3"/>
+            <Trigger index="4"/>
+            <Trigger index="5"/>
+            <Trigger index="6"/>
+            <Trigger index="7"/>
+            <Trigger index="8"/>
+            <Trigger index="9"/>
+            <Trigger index="10"/>
+            <Trigger index="11"/>
+            <Trigger index="12"/>
+            <Trigger index="13"/>
+            <Trigger index="14"/>
+            <Trigger index="15"/>
+        </Triggers>
+        <MatchUnits>
+            <MatchUnit index="0" enabled="1" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="1" value1="0" trigger="0"/>
+            <MatchUnit index="1" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="1" value1="0" trigger="1"/>
+            <MatchUnit index="2" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="3" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="4" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="5" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="6" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="7" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="8" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="9" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="10" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="11" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="12" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="13" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="14" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+            <MatchUnit index="15" enabled="0" match_type="0" counter_enable="0" counter_width="2" counter="2" countinuous="0" func="0" value0="" value1=""/>
+        </MatchUnits>
+        <Expressions type="Static">
+            <Expression>M0</Expression>
+        </Expressions>
+    </AoCore>
+    <GAO_ID>0101001010110110</GAO_ID>
+</GAO_CONFIG>

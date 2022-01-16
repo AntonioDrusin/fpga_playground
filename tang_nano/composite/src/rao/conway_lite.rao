@@ -1,0 +1,36 @@
+<?xml version="1" encoding="UTF-8"?>
+<GAO_CONFIG>
+    <Version>3.0</Version>
+    <Mode>Lite</Mode>
+    <AoCore_Lite index="0" sample_clock="conway/conway_algo/work_clk" trig_type="0" capture_amount="1024" implemention="0" input_register_enabled="0" capture_init_data_enabled="0">
+        <SignalList>
+            <Bus name="conway/conway_algo/sum[2:0]">
+                <Signal>conway/conway_algo/sum[2]</Signal>
+                <Signal>conway/conway_algo/sum[1]</Signal>
+                <Signal>conway/conway_algo/sum[0]</Signal>
+            </Bus>
+            <Signal>conway/conway_algo/start</Signal>
+            <Signal>conway/conway_algo/c</Signal>
+            <Bus name="conway/conway_algo/processed[7:0]">
+                <Signal>conway/conway_algo/processed[7]</Signal>
+                <Signal>conway/conway_algo/processed[6]</Signal>
+                <Signal>conway/conway_algo/processed[5]</Signal>
+                <Signal>conway/conway_algo/processed[4]</Signal>
+                <Signal>conway/conway_algo/processed[3]</Signal>
+                <Signal>conway/conway_algo/processed[2]</Signal>
+                <Signal>conway/conway_algo/processed[1]</Signal>
+                <Signal>conway/conway_algo/processed[0]</Signal>
+            </Bus>
+            <Signal>conway/conway_algo/cram_ce</Signal>
+            <Signal>conway/conway_algo/cram_wre</Signal>
+            <Signal>conway/conway_algo/c</Signal>
+            <Bus name="conway/conway_algo/counter[3:0]">
+                <Signal>conway/conway_algo/counter[3]</Signal>
+                <Signal>conway/conway_algo/counter[2]</Signal>
+                <Signal>conway/conway_algo/counter[1]</Signal>
+                <Signal>conway/conway_algo/counter[0]</Signal>
+            </Bus>
+        </SignalList>
+    </AoCore_Lite>
+    <GAO_ID>1000000111000110</GAO_ID>
+</GAO_CONFIG>

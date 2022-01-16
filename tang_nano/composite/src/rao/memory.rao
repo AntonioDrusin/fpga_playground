@@ -2,65 +2,26 @@
 <GAO_CONFIG>
     <Version>3.0</Version>
     <Mode>Standard</Mode>
-    <AoCore index="0" sample_clock="memory/mem_driver/clk" trig_type="0" storage_depth="1024" window_num="1" capture_amount="1024" trigger_pos="0">
+    <AoCore index="0" sample_clock="memory/mem_driver/clk" trig_type="0" storage_depth="2048" window_num="1" capture_amount="512" trigger_pos="0">
         <SignalList>
-            <Bus name="memory/mem_driver/addr[15:0]">
-                <Signal>memory/mem_driver/addr[15]</Signal>
-                <Signal>memory/mem_driver/addr[14]</Signal>
-                <Signal>memory/mem_driver/addr[13]</Signal>
-                <Signal>memory/mem_driver/addr[12]</Signal>
-                <Signal>memory/mem_driver/addr[11]</Signal>
-                <Signal>memory/mem_driver/addr[10]</Signal>
-                <Signal>memory/mem_driver/addr[9]</Signal>
-                <Signal>memory/mem_driver/addr[8]</Signal>
-                <Signal>memory/mem_driver/addr[7]</Signal>
-                <Signal>memory/mem_driver/addr[6]</Signal>
-                <Signal>memory/mem_driver/addr[5]</Signal>
-                <Signal>memory/mem_driver/addr[4]</Signal>
-                <Signal>memory/mem_driver/addr[3]</Signal>
-                <Signal>memory/mem_driver/addr[2]</Signal>
-                <Signal>memory/mem_driver/addr[1]</Signal>
-                <Signal>memory/mem_driver/addr[0]</Signal>
-            </Bus>
-            <Bus name="memory/mem_driver/bsram_datain[3:0]">
-                <Signal>memory/mem_driver/bsram_datain[3]</Signal>
-                <Signal>memory/mem_driver/bsram_datain[2]</Signal>
-                <Signal>memory/mem_driver/bsram_datain[1]</Signal>
-                <Signal>memory/mem_driver/bsram_datain[0]</Signal>
-            </Bus>
-            <Bus name="memory/mem_driver/bsram_addrin[6:0]">
-                <Signal>memory/mem_driver/bsram_addrin[6]</Signal>
-                <Signal>memory/mem_driver/bsram_addrin[5]</Signal>
-                <Signal>memory/mem_driver/bsram_addrin[4]</Signal>
-                <Signal>memory/mem_driver/bsram_addrin[3]</Signal>
-                <Signal>memory/mem_driver/bsram_addrin[2]</Signal>
-                <Signal>memory/mem_driver/bsram_addrin[1]</Signal>
-                <Signal>memory/mem_driver/bsram_addrin[0]</Signal>
-            </Bus>
-            <Bus name="memory/mem_driver/counter[4:0]">
+            <Bus name="memory/mem_driver/counter[6:0]">
+                <Signal>memory/mem_driver/counter[6]</Signal>
+                <Signal>memory/mem_driver/counter[5]</Signal>
                 <Signal>memory/mem_driver/counter[4]</Signal>
                 <Signal>memory/mem_driver/counter[3]</Signal>
                 <Signal>memory/mem_driver/counter[2]</Signal>
                 <Signal>memory/mem_driver/counter[1]</Signal>
                 <Signal>memory/mem_driver/counter[0]</Signal>
             </Bus>
-            <Signal>memory/mem_driver/read_strobe</Signal>
-            <Signal>memory/mem_driver/ready</Signal>
-            <Signal>memory/mem_driver/bsram_writeen</Signal>
-            <Signal>memory/mem_driver/mem_sio_outputen</Signal>
             <Signal>memory/mem_driver/mem_ce_n</Signal>
             <Signal>memory/mem_driver/reading</Signal>
-            <Bus name="memory/mem_driver/mem_sio_in[3:0]">
-                <Signal>memory/mem_driver/mem_sio_in[3]</Signal>
-                <Signal>memory/mem_driver/mem_sio_in[2]</Signal>
-                <Signal>memory/mem_driver/mem_sio_in[1]</Signal>
-                <Signal>memory/mem_driver/mem_sio_in[0]</Signal>
-            </Bus>
-            <Bus name="memory/mem_driver/mem_sio_out[3:0]">
-                <Signal>memory/mem_driver/mem_sio_out[3]</Signal>
-                <Signal>memory/mem_driver/mem_sio_out[2]</Signal>
-                <Signal>memory/mem_driver/mem_sio_out[1]</Signal>
-                <Signal>memory/mem_driver/mem_sio_out[0]</Signal>
+            <Signal>memory/mem_driver/writing</Signal>
+            <Signal>memory/mem_driver/video</Signal>
+            <Bus name="mem_sio[3:0]">
+                <Signal>mem_sio[3]</Signal>
+                <Signal>mem_sio[2]</Signal>
+                <Signal>mem_sio[1]</Signal>
+                <Signal>mem_sio[0]</Signal>
             </Bus>
         </SignalList>
         <Triggers>
@@ -107,5 +68,5 @@
             <Expression>M0</Expression>
         </Expressions>
     </AoCore>
-    <GAO_ID>0101000100010101</GAO_ID>
+    <GAO_ID>1000000011001101</GAO_ID>
 </GAO_CONFIG>

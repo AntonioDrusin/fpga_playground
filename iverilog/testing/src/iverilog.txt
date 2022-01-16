@@ -1,0 +1,3 @@
+../impl/gwsynthesis/testing.vg
+tests/counter_test.v
+../lib/short_prim_tsim.v

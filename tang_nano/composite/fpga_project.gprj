@@ -5,17 +5,25 @@
     <Version>5</Version>
     <Device name="GW1N-1" pn="GW1N-LV1QN48C6/I5">gw1n1-004</Device>
     <FileList>
+        <File path="src/conway.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_dpb/gowin_dpb.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_linecache/gowin_linecache.v" type="file.verilog" enable="1"/>
-        <File path="src/gowin_rpll/gowin_rpll.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_osc/gowin_osc.v" type="file.verilog" enable="1"/>
         <File path="src/memory.v" type="file.verilog" enable="1"/>
         <File path="src/pixel_signal.v" type="file.verilog" enable="1"/>
+        <File path="src/test.v" type="file.verilog" enable="0"/>
         <File path="src/tvout.v" type="file.verilog" enable="1"/>
         <File path="src/video_sync.v" type="file.verilog" enable="1"/>
         <File path="src/fpga_project.cst" type="file.cst" enable="1"/>
         <File path="src/timing.sdc" type="file.sdc" enable="1"/>
-        <File path="src/clock_view.rao" type="file.gao" enable="0"/>
-        <File path="src/memory.rao" type="file.gao" enable="0"/>
-        <File path="src/video_signal.rao" type="file.gao" enable="0"/>
-        <File path="src/video_sync.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/clock_view.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/conway.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/conway_lite.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/memory.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/memory_write.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/overview.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/test.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/video_signal.rao" type="file.gao" enable="0"/>
+        <File path="src/rao/video_sync.rao" type="file.gao" enable="0"/>
     </FileList>
 </Project>
